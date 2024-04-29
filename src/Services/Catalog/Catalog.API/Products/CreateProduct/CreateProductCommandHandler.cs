@@ -1,5 +1,6 @@
 ﻿//TODO : Representation Application logic layer in vertical slice archictecture
 using BuildingBlocks.Core.CQRS;
+using Catalog.API.Models;
 
 namespace Catalog.API.Products.CreateProduct;
 
@@ -14,8 +15,20 @@ internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProduc
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        //Business loigc to create a product
-        throw new NotImplementedException();
+        //Business logic to create a product
+
+        var product = new Product
+        {
+            Name = command.Name,
+            Category = command.Category,
+            Description = command.Description,
+            ImageFile = command.ImageFile,
+            Price = command.Price
+        };
+
+        //Save database (Transaction DB Marten)
+
+        return new CreateProductResult(Guid.NewGuid());
     }
 }
 
