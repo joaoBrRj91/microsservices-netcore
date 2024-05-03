@@ -4,13 +4,16 @@ using Catalog.API.Models;
 
 namespace Catalog.API.Products.CreateProduct;
 
+
+#region Command
 public record CreateProductCommand
     (string Name, List<string> Category, string Description, string ImageFile, decimal Price)
     : ICommand<CreateProductResult>;
 
-
 public record CreateProductResult(Guid Id);
+#endregion
 
+#region Handler
 internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
@@ -31,6 +34,7 @@ internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProduc
         return new CreateProductResult(Guid.NewGuid());
     }
 }
+#endregion
 
 
 
