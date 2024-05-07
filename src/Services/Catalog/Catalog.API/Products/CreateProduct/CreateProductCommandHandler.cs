@@ -1,7 +1,4 @@
 ﻿//TODO : Representation Application logic layer in vertical slice archictecture
-using BuildingBlocks.Core.CQRS;
-using Catalog.API.Models;
-
 namespace Catalog.API.Products.CreateProduct;
 
 
@@ -14,7 +11,8 @@ public record CreateProductResult(Guid Id);
 #endregion
 
 #region Handler
-internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal sealed class CreateProductCommandHandler(IDocumentSession session) 
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
@@ -30,8 +28,10 @@ internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProduc
         };
 
         //Save database (Transaction DB Marten)
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
 
-        return new CreateProductResult(Guid.NewGuid());
+        return new CreateProductResult(product.Id);
     }
 }
 #endregion
