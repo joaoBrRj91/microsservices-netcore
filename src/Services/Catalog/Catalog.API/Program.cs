@@ -4,7 +4,7 @@ using Catalog.API.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddBuidingBlockServices();
+builder.Services.AddBuidingBlockServices(builder.Configuration);
 
 #endregion
 
