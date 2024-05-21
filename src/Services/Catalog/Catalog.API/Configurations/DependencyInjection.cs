@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Products.CreateProduct;
+using Catalog.API.Products.GetProducts;
 
 namespace Catalog.API.Configurations
 {
@@ -10,6 +11,8 @@ namespace Catalog.API.Configurations
             services.AddCarter(new DependencyContextAssemblyCatalog(typeof(Program).Assembly), config =>
             {
                 config.WithModule<CreateProductEndpoint>();
+                config.WithModule<GetProductsEndpoint>();
+
             });
 
 
