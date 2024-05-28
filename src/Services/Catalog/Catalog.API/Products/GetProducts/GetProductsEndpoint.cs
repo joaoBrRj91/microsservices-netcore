@@ -1,8 +1,7 @@
 ﻿
-using Catalog.API.Products.CreateProduct;
-
 namespace Catalog.API.Products.GetProducts;
 
+//public record GetProdcutsRequest()
 public record GetProductsResponse(IEnumerable<Product> Products);
 
 public class GetProductsEndpoint : ICarterModule
@@ -17,10 +16,10 @@ public class GetProductsEndpoint : ICarterModule
 
             return Results.Ok(response);
         })
-         .WithName("GetProductProducts")
+         .WithName("GetProducts")
          .Produces<GetProductsResponse>(StatusCodes.Status200OK)
          .ProducesProblem(StatusCodes.Status400BadRequest)
-         .WithSummary("Create Product")
+         .WithSummary("Get Products")
          .WithDescription("Get all products for ecommerce microsservices"); 
     }
 }

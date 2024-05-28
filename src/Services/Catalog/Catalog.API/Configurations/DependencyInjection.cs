@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Products.CreateProduct;
+using Catalog.API.Products.GetProductById;
 using Catalog.API.Products.GetProducts;
 
 namespace Catalog.API.Configurations
@@ -12,6 +13,8 @@ namespace Catalog.API.Configurations
             {
                 config.WithModule<CreateProductEndpoint>();
                 config.WithModule<GetProductsEndpoint>();
+                config.WithModule<GetProductByIdEndpoint>();
+
 
             });
 

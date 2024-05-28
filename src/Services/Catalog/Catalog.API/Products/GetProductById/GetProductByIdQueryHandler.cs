@@ -1,5 +1,4 @@
-﻿using Catalog.API.Products.GetProducts;
-using Marten.Linq.QueryHandlers;
+﻿using Catalog.API.Exceptions;
 
 namespace Catalog.API.Products.GetProductById;
 
@@ -19,5 +18,7 @@ internal sealed class GetProductByIdQueryHandler(ILogger<GetProductByIdQueryHand
 
         if(product is null)
             throw new ProductNotFoundException();
+
+        return new GetProductByIdResult(product);
     }
 }
