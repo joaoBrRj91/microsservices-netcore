@@ -12,5 +12,5 @@ public interface ICommand<out TResponse> : IRequest<TResponse>
 
 
 /// Represents a void type, since <see cref="System.Void"/> is not a valid return type in C#.
-public interface ICommand : IRequest<Unit>
+public interface ICommand : IRequest
 { }

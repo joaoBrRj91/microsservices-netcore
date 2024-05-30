@@ -2,6 +2,7 @@
 using Catalog.API.Products.GetProductByCategory;
 using Catalog.API.Products.GetProductById;
 using Catalog.API.Products.GetProducts;
+using Catalog.API.Products.UpdateProduct;
 
 namespace Catalog.API.Configurations
 {
@@ -13,6 +14,7 @@ namespace Catalog.API.Configurations
             services.AddCarter(new DependencyContextAssemblyCatalog(typeof(Program).Assembly), config =>
             {
                 config.WithModule<CreateProductEndpoint>();
+                config.WithModule<UpdateProductEndpoint>();
                 config.WithModule<GetProductsEndpoint>();
                 config.WithModule<GetProductByIdEndpoint>();
                 config.WithModule<GetProductsByCategoryEndpoint>();

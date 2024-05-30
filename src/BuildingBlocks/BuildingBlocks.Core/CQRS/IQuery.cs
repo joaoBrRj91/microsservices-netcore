@@ -13,5 +13,5 @@ public interface IQuery<out TResponse> : IRequest<TResponse>
 
 
 /// Represents a void type, since <see cref="System.Void"/> is not a valid return type in C#.
-public interface IQuery : IRequest<Unit>
+public interface IQuery : IRequest
 { }

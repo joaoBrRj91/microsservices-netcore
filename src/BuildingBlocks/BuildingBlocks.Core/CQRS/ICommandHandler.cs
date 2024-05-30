@@ -5,8 +5,8 @@ namespace BuildingBlocks.Core.CQRS;
 
 //TODO : This interface is for void return handler
 public interface ICommandHandler<in TCommand>
-    : IRequestHandler<TCommand, Unit>
-    where TCommand : ICommand<Unit>
+    : IRequestHandler<TCommand>
+    where TCommand : ICommand
 {
 }
 
