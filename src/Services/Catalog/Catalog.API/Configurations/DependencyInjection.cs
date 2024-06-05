@@ -39,6 +39,10 @@ namespace Catalog.API.Configurations
                 //For Prodution
                // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
             }).UseLightweightSessions();
+
+
+            //Register Validators
+            services.AddValidatorsFromAssembly(typeof(Program).Assembly);
         }
     }
 }

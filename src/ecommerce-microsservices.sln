@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks.Core", "Buil
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{22B409F4-D827-44F6-ACC0-96DA314BE63B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.CrossCutting", "BuildingBlocks\BuildingBlocks.CrossCutting\BuildingBlocks.CrossCutting.csproj", "{5F44FDE5-003B-4C44-BA0B-8CE8BD64D25B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{22B409F4-D827-44F6-ACC0-96DA314BE63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22B409F4-D827-44F6-ACC0-96DA314BE63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22B409F4-D827-44F6-ACC0-96DA314BE63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F44FDE5-003B-4C44-BA0B-8CE8BD64D25B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F44FDE5-003B-4C44-BA0B-8CE8BD64D25B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F44FDE5-003B-4C44-BA0B-8CE8BD64D25B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F44FDE5-003B-4C44-BA0B-8CE8BD64D25B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +47,7 @@ Global
 		{6CBC36DE-CED5-4380-B49B-D03B2B15AC8B} = {FCA05FE8-1C72-4FB8-9B1F-7C483C8ED7ED}
 		{F2531B38-6D5F-4E57-A9D5-84EAE7830940} = {6CBC36DE-CED5-4380-B49B-D03B2B15AC8B}
 		{27D3CFB6-18D8-49E3-9D48-FA0E0288119D} = {006BBBD1-1FAA-4555-80AA-517F9297E483}
+		{5F44FDE5-003B-4C44-BA0B-8CE8BD64D25B} = {006BBBD1-1FAA-4555-80AA-517F9297E483}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6504C011-0459-4E1C-8B47-2B91A504B442}

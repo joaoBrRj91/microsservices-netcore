@@ -10,13 +10,36 @@ public record CreateProductCommand
 public record CreateProductResult(Guid Id);
 #endregion
 
+#region Validator
+public sealed class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+{
+    public CreateProductCommandValidator()
+    {
+        RuleFor(p => p.Name).NotEmpty().WithMessage("Name is required");
+        RuleFor(p => p.Category).NotEmpty().WithMessage("Category is required");
+        RuleFor(p => p.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+        RuleFor(p => p.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+
+    }
+}
+#endregion
+
 #region Handler
-internal sealed class CreateProductCommandHandler(IDocumentSession session) 
+internal sealed class CreateProductCommandHandler
+    (IDocumentSession session, IValidator<CreateProductCommand> validator)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         //Business logic to create a product
+
+        var resultValidation = await validator.ValidateAsync(command, cancellationToken);
+
+        if (!resultValidation.IsValid)
+        {
+            var customErrors = string.Join(';', resultValidation.Errors.Select(m => m.ErrorMessage));
+            throw new ValidationException(customErrors);
+        }
 
         var product = new Product
         {
