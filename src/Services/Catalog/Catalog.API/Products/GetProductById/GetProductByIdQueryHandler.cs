@@ -14,7 +14,7 @@ internal sealed class GetProductByIdQueryHandler(ILogger<GetProductByIdQueryHand
     {
         logger.LogInformation("{GetProductByIdQueryHandler} called with {query}", nameof(GetProductByIdQueryHandler), query);
 
-        var product = await session.LoadAsync<Product>(query.Id, cancellationToken) ?? throw new ProductNotFoundException();
+        var product = await session.LoadAsync<Product>(query.Id, cancellationToken) ?? throw new ProductNotFoundException(query.Id);
 
         return new GetProductByIdResult(product);
     }
