@@ -26,20 +26,13 @@ public sealed class CreateProductCommandValidator : AbstractValidator<CreateProd
 
 #region Handler
 internal sealed class CreateProductCommandHandler
-    (IDocumentSession session, IValidator<CreateProductCommand> validator)
+    (IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         //Business logic to create a product
-
-        var resultValidation = await validator.ValidateAsync(command, cancellationToken);
-
-        if (!resultValidation.IsValid)
-        {
-            var customErrors = string.Join(';', resultValidation.Errors.Select(m => m.ErrorMessage));
-            throw new ValidationException(customErrors);
-        }
+        logger.LogInformation("[CreateProductCommandHandler] : {command}",command);
 
         var product = new Product
         {

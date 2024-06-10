@@ -1,4 +1,5 @@
-﻿using Catalog.API.Products.CreateProduct;
+﻿using BuildingBlocks.Core.Behaviors;
+using Catalog.API.Products.CreateProduct;
 using Catalog.API.Products.DeleteProduct;
 using Catalog.API.Products.GetProductByCategory;
 using Catalog.API.Products.GetProductById;
@@ -11,8 +12,11 @@ namespace Catalog.API.Configurations
     {
         public static void AddBuidingBlockServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //Register Carter with assembly have CarterModules 
-            services.AddCarter(new DependencyContextAssemblyCatalog(typeof(Program).Assembly), config =>
+            var registrationFromAssembly = typeof(Program).Assembly;
+
+
+            #region Register Carter with assembly have CarterModules 
+            services.AddCarter(new DependencyContextAssemblyCatalog(registrationFromAssembly), config =>
             {
                 config.WithModule<CreateProductEndpoint>();
                 config.WithModule<DeleteProductEndpoint>();
@@ -22,27 +26,31 @@ namespace Catalog.API.Configurations
                 config.WithModule<GetProductsByCategoryEndpoint>();
 
             });
+            #endregion
 
-
-            //Register Mediator
+            #region Register Mediator
             services.AddMediatR(config =>
             {
                 //Tell Mediator when the commands and handlers is registrated
-                config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+                config.RegisterServicesFromAssembly(registrationFromAssembly);
+                //Execute before find the handler who will receive the command
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
+            #endregion
 
+            #region Register Validators - Fluent Validator
+            services.AddValidatorsFromAssembly(registrationFromAssembly);
+            #endregion
 
-            //Register Marter with no cache and no proxy for entities for performance
+            #region Register Marter with no cache and no proxy for entities for performance
             services.AddMarten(config =>
             {
                 config.Connection(configuration.GetConnectionString("DefaultConnection")!);
                 //For Prodution
-               // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
+                // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
             }).UseLightweightSessions();
+            #endregion
 
-
-            //Register Validators
-            services.AddValidatorsFromAssembly(typeof(Program).Assembly);
         }
     }
 }
