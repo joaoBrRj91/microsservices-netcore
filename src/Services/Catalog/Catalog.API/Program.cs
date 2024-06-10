@@ -16,5 +16,7 @@ var app = builder.Build();
  * and map endpoints defined called AddRouter Method implemented from Interface*/
 app.MapCarter();
 
+app.AddGlobalExceptionHandler();
+
 app.Run();
 #endregion
