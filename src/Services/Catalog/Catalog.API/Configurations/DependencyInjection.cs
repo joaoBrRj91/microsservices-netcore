@@ -14,7 +14,6 @@ namespace Catalog.API.Configurations
         {
             var registrationFromAssembly = typeof(Program).Assembly;
 
-
             #region Register Carter with assembly have CarterModules 
             services.AddCarter(new DependencyContextAssemblyCatalog(registrationFromAssembly), config =>
             {
@@ -26,6 +25,10 @@ namespace Catalog.API.Configurations
                 config.WithModule<GetProductsByCategoryEndpoint>();
 
             });
+            #endregion
+
+            #region Exception Handler
+            services.AddExceptionHandler<CustomExceptionHandler>();
             #endregion
 
             #region Register Mediator
@@ -50,7 +53,7 @@ namespace Catalog.API.Configurations
                 // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
             }).UseLightweightSessions();
             #endregion
-
+           
         }
     }
 }

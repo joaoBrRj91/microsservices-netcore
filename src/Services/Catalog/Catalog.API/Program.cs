@@ -16,7 +16,11 @@ var app = builder.Build();
  * and map endpoints defined called AddRouter Method implemented from Interface*/
 app.MapCarter();
 
-app.AddGlobalExceptionHandler();
+//This exception handler work only this microsservices Catalog. 
+// app.AddExceptionHandler();
+
+//Global Exception handler defined in BuildingBlocks for all microsservices
+app.UseExceptionHandler(options => { });
 
 app.Run();
 #endregion

@@ -5,7 +5,7 @@ namespace Catalog.API.Configurations
 {
     public static class HttpPipeline
     {
-        public static void AddGlobalExceptionHandler(this IApplicationBuilder application)
+        public static void AddExceptionHandler(this IApplicationBuilder application)
         {
             application.UseExceptionHandler(expectionHandlerApp =>
             {
