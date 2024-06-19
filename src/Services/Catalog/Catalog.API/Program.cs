@@ -20,7 +20,7 @@ app.MapCarter();
 // app.AddExceptionHandler();
 
 //Global Exception handler defined in BuildingBlocks for all microsservices
-app.UseExceptionHandler(options => { });
+//app.UseExceptionHandler(options => { });
 
 app.Run();
 #endregion

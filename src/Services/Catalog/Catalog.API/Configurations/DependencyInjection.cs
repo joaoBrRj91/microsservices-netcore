@@ -38,6 +38,8 @@ namespace Catalog.API.Configurations
                 config.RegisterServicesFromAssembly(registrationFromAssembly);
                 //Execute before find the handler who will receive the command
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+
             });
             #endregion
 

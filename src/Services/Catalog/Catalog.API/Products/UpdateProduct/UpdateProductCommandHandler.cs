@@ -34,14 +34,11 @@ public sealed class UpdateProductCommandValidator : AbstractValidator<UpdateProd
 #endregion
 
 #region Handler
-internal sealed class UpdateProductCommandHandler(
-    ILogger<UpdateProductCommandHandler> logger,
-    IDocumentSession session) : ICommandHandler<UpdateProductCommand, UpdateProductResult>
+internal sealed class UpdateProductCommandHandler(IDocumentSession session) 
+    : ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation("{UpdateProductCommandHandler} called with {command}", nameof(UpdateProductCommandHandler), command);
-
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken) ?? throw new ProductNotFoundException(command.Id);
         product.Name = command.Name;
         product.Category = command.Category;
