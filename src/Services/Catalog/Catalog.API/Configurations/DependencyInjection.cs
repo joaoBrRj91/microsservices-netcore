@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Core.Behaviors;
-using Catalog.API.Products.CreateProduct;
+﻿using Catalog.API.Products.CreateProduct;
 using Catalog.API.Products.DeleteProduct;
 using Catalog.API.Products.GetProductByCategory;
 using Catalog.API.Products.GetProductById;
@@ -10,7 +9,7 @@ namespace Catalog.API.Configurations
 {
     public static class DependencyInjection
     {
-        public static void AddBuidingBlockServices(this IServiceCollection services, IConfiguration configuration)
+        public static void AddBuidingBlockServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             var registrationFromAssembly = typeof(Program).Assembly;
 
@@ -54,6 +53,9 @@ namespace Catalog.API.Configurations
                 //For Prodution
                 // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
             }).UseLightweightSessions();
+
+            if (environment.IsDevelopment())
+                services.InitializeMartenWith<CatalogInitialData>();
             #endregion
            
         }

@@ -3,8 +3,7 @@ using Catalog.API.Configurations;
 #region Add Services To The Container - DI
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddBuidingBlockServices(builder.Configuration);
+builder.Services.AddBuidingBlockServices(builder.Configuration,builder.Environment);
 
 #endregion
 

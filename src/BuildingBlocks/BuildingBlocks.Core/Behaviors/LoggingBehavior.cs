@@ -27,7 +27,7 @@ public sealed class LoggingBehavior<TRequest, TResponse>
         if (timeTaken.Seconds > 3)
             logger.LogWarning("[PERFORMANCE] The request {Request} took {timeTaken}", typeof(TRequest).Name, timeTaken);
 
-        logger.LogInformation("[START] Handler Request={Request} | Response={Response} | Response Data={request}", 
+        logger.LogInformation("[END] Handler Request={Request} | Response={Response} | Response Data={request}", 
             typeof(TRequest).Name,typeof(TResponse).Name, JsonSerializer.Serialize(response));
 
         return response;
