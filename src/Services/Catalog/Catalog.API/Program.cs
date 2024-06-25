@@ -1,4 +1,6 @@
 using Catalog.API.Configurations;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 #region Add Services To The Container - DI
 
@@ -19,7 +21,13 @@ app.MapCarter();
 // app.AddExceptionHandler();
 
 //Global Exception handler defined in BuildingBlocks for all microsservices
-//app.UseExceptionHandler(options => { });
+app.UseExceptionHandler(options => { });
+
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });; 
 
 app.Run();
 #endregion

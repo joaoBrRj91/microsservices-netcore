@@ -12,6 +12,7 @@ namespace Catalog.API.Configurations
         public static void AddBuidingBlockServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             var registrationFromAssembly = typeof(Program).Assembly;
+            var connectionString = configuration.GetConnectionString("DefaultConnection")!;
 
             #region Register Carter with assembly have CarterModules 
             services.AddCarter(new DependencyContextAssemblyCatalog(registrationFromAssembly), config =>
@@ -49,7 +50,7 @@ namespace Catalog.API.Configurations
             #region Register Marter with no cache and no proxy for entities for performance
             services.AddMarten(config =>
             {
-                config.Connection(configuration.GetConnectionString("DefaultConnection")!);
+                config.Connection(connectionString);
                 //For Prodution
                 // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
             }).UseLightweightSessions();
@@ -57,7 +58,11 @@ namespace Catalog.API.Configurations
             if (environment.IsDevelopment())
                 services.InitializeMartenWith<CatalogInitialData>();
             #endregion
-           
+
+            #region Health Check
+            services.AddHealthChecks().AddNpgSql(connectionString);
+            #endregion
+
         }
     }
 }
