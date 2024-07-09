@@ -51,6 +51,10 @@ namespace Catalog.API.Configurations
             services.AddMarten(config =>
             {
                 config.Connection(connectionString);
+
+                //For DDD concerns 
+               // config.UseDefaultSerialization(nonPublicMembersStorage: NonPublicMembersStorage.NonPublicSetters);
+
                 //For Prodution
                 // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
             }).UseLightweightSessions();
