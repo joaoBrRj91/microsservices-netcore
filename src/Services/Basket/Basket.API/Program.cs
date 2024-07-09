@@ -1,5 +1,3 @@
-
-
 #region Add Services To The Container - DI
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
