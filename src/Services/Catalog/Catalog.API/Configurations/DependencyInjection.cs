@@ -5,6 +5,8 @@ using Catalog.API.Products.GetProductById;
 using Catalog.API.Products.GetProducts;
 using Catalog.API.Products.UpdateProduct;
 
+
+//TODO : Extract common configuration in building blocks class library
 namespace Catalog.API.Configurations
 {
     public static class DependencyInjection
@@ -57,7 +59,7 @@ namespace Catalog.API.Configurations
 
                 //For Prodution
                 // config.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.None;
-            }).UseLightweightSessions();
+            }).UseLightweightSessions(); //Best way for performance
 
             if (environment.IsDevelopment())
                 services.InitializeMartenWith<CatalogInitialData>();

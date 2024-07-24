@@ -1,6 +1,4 @@
 ﻿
-using Basket.API.Baskets.GetBasket;
-
 namespace Basket.API.Baskets.StoreBasket;
 
 public record StoreBasketRequest(ShoppingCart Cart);

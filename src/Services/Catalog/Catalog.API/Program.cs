@@ -2,6 +2,9 @@ using Catalog.API.Configurations;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
+
+//Refactoring this program for the same rules and configuration business of the Basket.API Microsservies
+
 #region Add Services To The Container - DI
 var builder = WebApplication.CreateBuilder(args);
 

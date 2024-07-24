@@ -2,6 +2,7 @@
 
 public class ShoppingCart
 {
+    public Guid Id { get; set; }
     public string UserName { get; set; } = default!;
     public List<ShoppingCardItem> Items { get; set; } = [];
     public decimal TotalPrice => Items.Sum(i => i.Price * i.Quantity);
