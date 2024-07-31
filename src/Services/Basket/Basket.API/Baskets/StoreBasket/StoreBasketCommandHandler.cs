@@ -1,5 +1,4 @@
-﻿
-namespace Basket.API.Baskets.StoreBasket;
+﻿namespace Basket.API.Baskets.StoreBasket;
 
 public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
 public record StoreBasketResult(bool IsSuccess, string UserName);
@@ -14,16 +13,15 @@ public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
     }
 }
 
-public class StoreBasketCommandHandler : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+public class StoreBasketCommandHandler(IBasketRepository basketRepository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
 {
-    public async Task<StoreBasketResult> Handle(StoreBasketCommand request, CancellationToken cancellationToken)
+    public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
-
-        var cart = request.Cart;
 
         //TODO : Store basket in database (use Marten upsert - if exist = update, if not create)
         //TODO : Update Cache service with changes basket user 
+        await basketRepository.StoreBasket(command.Cart, cancellationToken);
 
-        return await Task.FromResult(new StoreBasketResult(true, cart.UserName));
+        return new StoreBasketResult(true, command.Cart.UserName);
     }
 }

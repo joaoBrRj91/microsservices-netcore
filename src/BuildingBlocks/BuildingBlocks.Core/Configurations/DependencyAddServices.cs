@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace BuildingBlocks.Core.Configurations;
 
-public static class CommonDependencyInjection
+public static class DependencyAddServices
 {
 
     public static void AddCarterService(this IServiceCollection services, Assembly registrationFromAssembly, 

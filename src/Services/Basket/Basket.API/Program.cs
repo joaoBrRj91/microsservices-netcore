@@ -15,20 +15,17 @@ builder.Services.AddMarten(options =>
 
 }).UseLightweightSessions();
 
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+
 var app = builder.Build();
 
 #endregion
 
 #region Configure The HTTP Request Pipeline - Middleware
 
-/*Find all class is have implementation ICarterModule (in assembly reigistrated) 
- * and map endpoints defined called AddRouter Method implemented from Interface*/
-app.MapCarter();
-
-
-
-//Global Exception handler defined in BuildingBlocks for all microsservices
-app.UseExceptionHandler(options => { });
+//Use Common Services Added In Container -DI
+app.UseCommonServices();
 
 app.Run();
 
