@@ -1,5 +1,4 @@
 #region Add Services To The Container - DI
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCarterService(typeof(Program).Assembly, typeof(GetBasketEndpoint), typeof(StoreBasketEndpoint), typeof(DeleteBasketEndpoint));
@@ -17,6 +16,13 @@ builder.Services.AddMarten(options =>
 
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CacheBasketRepository>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+   // options.InstanceName = "Basket";
+});
+
 
 var app = builder.Build();
 
