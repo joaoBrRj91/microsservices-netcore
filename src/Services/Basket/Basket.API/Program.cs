@@ -20,7 +20,7 @@ builder.Services.Decorate<IBasketRepository, CacheBasketRepository>();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
-   // options.InstanceName = "Basket";
+   //options.InstanceName = "Basket";
 });
 
 
