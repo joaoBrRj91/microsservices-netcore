@@ -12,8 +12,8 @@ internal class DiscountContext(DbContextOptions<DiscountContext> options) : DbCo
 
         //Seed when call Add-Migration
         modelBuilder.Entity<Coupon>().HasData(
-                new Coupon { Id= Guid.NewGuid(), ProductName = "IPhone 15", Descriptiom = "IPhone Description", Amount= 499 },
-                new Coupon { Id = Guid.NewGuid(), ProductName = "IPhone 15", Descriptiom = "IPhone Description", Amount = 499 }
+                new Coupon { Id= 1, ProductName = "IPhone 15", Description = "IPhone Description", Amount= 499 },
+                new Coupon { Id = 2, ProductName = "IPhone 15", Description = "IPhone Description", Amount = 499 }
             );
     }
 }

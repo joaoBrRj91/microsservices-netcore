@@ -2,6 +2,7 @@
 using Discount.GRPC.Data;
 using Discount.GRPC.Models;
 using Grpc.Core;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Discount.GRPC.Services;
@@ -16,17 +17,25 @@ internal class DiscountService
             .Coupons
             .FirstOrDefaultAsync(d => d.ProductName == request.ProductName);
 
-        if (coupon is null)
-            coupon = new Coupon { ProductName = request.ProductName, Descriptiom = "No Discount", Amount = 0 };
+        coupon ??= new Coupon { ProductName = request.ProductName, Description = "No Discount", Amount = 0 };
 
-        logger.LogInformation("Discount is retrieved for product : {productName}, amount: {amount}, description: {description}", coupon.ProductName, coupon.Amount, coupon.Descriptiom);
+        logger.LogInformation("Discount is retrieved for product : {productName}, amount: {amount}, description: {description}", coupon.ProductName, coupon.Amount, coupon.Description);
 
-        return new CouponModel { ProductName = request.ProductName, Amount = coupon.Amount };
+        return BuildCouponModelByCoupon(coupon);
     }
 
-    public override Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
+    public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
     {
-        return base.CreateDiscount(request, context);
+        var coupon = request.Coupon.Adapt<Coupon>();
+        if (coupon is null)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid Request"));
+
+        discountContext.Coupons.Add(coupon);
+        await discountContext.SaveChangesAsync();
+
+        logger.LogInformation("Discount is created for product : {productName}, amount: {amount}, description: {description}", coupon.ProductName, coupon.Amount, coupon.Description);
+
+        return BuildCouponModelByCoupon(coupon);
 
     }
 
@@ -39,4 +48,9 @@ internal class DiscountService
     {
         return base.DeleteDiscount(request, context);
     }
+
+
+    private static CouponModel BuildCouponModelByCoupon(Coupon coupon) 
+        => new() { ProductName = coupon.ProductName, Description = coupon.Description, Amount = coupon.Amount };
+
 }
