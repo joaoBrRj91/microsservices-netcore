@@ -33,7 +33,7 @@ public class StoreBasketCommandHandler(
     {
         foreach (var item in cart.Items)
         {
-            var coupon = await discountClient.GetDiscountAsync(new GetDiscountRequest { ProductName = item.ProductName },cancellationToken);
+            var coupon = await discountClient.GetDiscountAsync(new GetDiscountRequest { ProductName = item.ProductName },cancellationToken: cancellationToken);
             item.Price -= coupon.Amount;
         }
 
