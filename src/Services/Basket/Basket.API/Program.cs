@@ -1,6 +1,4 @@
 using Basket.API.Configurations;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 #region Add Services To The Container - DI
 var builder = WebApplication.CreateBuilder(args);

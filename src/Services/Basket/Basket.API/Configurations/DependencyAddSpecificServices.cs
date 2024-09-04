@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Configurations
+﻿using Discount.Grpc;
+
+namespace Basket.API.Configurations
 {
     public static class DependencyAddSpecificServices
     {
@@ -31,6 +33,12 @@
                 options.Configuration = configuration.GetConnectionString("Redis");
                 //options.InstanceName = "Basket";
             });
+
+            services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+            {
+                options.Address = new Uri(configuration["GrpcSettings:DiscountUrl"]!);
+            });
+
         }
 
         public static void AddBusinessServices(this IServiceCollection services)
