@@ -37,7 +37,16 @@ namespace Basket.API.Configurations
             services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
             {
                 options.Address = new Uri(configuration["GrpcSettings:DiscountUrl"]!);
-            });
+            })
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                {
+                    return new HttpClientHandler
+                    {
+                        ServerCertificateCustomValidationCallback =
+                        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                    };
+                });
+            
 
         }
 
