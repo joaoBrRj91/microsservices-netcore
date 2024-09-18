@@ -8,7 +8,7 @@ namespace Basket.API.Configurations
         public static void UseInfraServices(this WebApplication webApplication)
         {
             //Use Common Services Added In Container -DI
-            webApplication.UseCommonServices();
+            webApplication.UseCommonApiServices();
 
             webApplication.UseHealthChecks("/health",
              new HealthCheckOptions
