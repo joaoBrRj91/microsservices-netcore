@@ -6,6 +6,7 @@ public class OrderItem : Entity<OrderItemId>
 {
     internal OrderItem(OrderId orderId, ProductId productId, decimal price, ushort quantity)
     {
+        Id = OrderItemId.Of(Guid.NewGuid());
         OrderId = orderId;
         ProductId = productId;
         Price = price;

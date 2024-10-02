@@ -1,3 +1,17 @@
 ﻿namespace Ordering.Domain.ValueObjects;
 
-public readonly record struct OrderName(string Name);
+public record OrderName
+{
+    private const int DEFAULT_LENGTH = 5;
+    public string Value { get; init; }
+
+    private OrderName(string value) => Value = value;
+
+    public static OrderName Of(string value)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(value);
+        ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DEFAULT_LENGTH);
+
+        return new OrderName(value);
+    }
+}
