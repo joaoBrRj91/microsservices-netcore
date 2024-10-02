@@ -7,6 +7,8 @@ public record CustomerName
     public string FirstName { get; init; }
     public string LastName { get; init; }
 
+    protected CustomerName() { }
+
     private CustomerName(string firstName, string lastName)
     {
         FirstName = firstName;
