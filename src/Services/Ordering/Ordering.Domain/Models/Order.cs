@@ -31,8 +31,7 @@ public class Order : Aggregate<OrderId>
             OrderStatus = OrderStatus.Pending
         };
 
-        //Add domain event in list of events for dispacher after trigger save changes in database
-
+        order.AddDomainEvent(new OrderCreateEvent(order));
         return order;
     }
 
@@ -44,7 +43,7 @@ public class Order : Aggregate<OrderId>
         Payment = payment;
         OrderStatus = orderStatus;
 
-        //Add domain event in list of events for dispacher after trigger save changes in database
+        AddDomainEvent(new OrderUpdateEvent(this));
     }
 
 
@@ -62,7 +61,7 @@ public class Order : Aggregate<OrderId>
         var orderItem = _orderItems.FirstOrDefault(o => o.ProductId == productId);
         if(orderItem is not null) _orderItems.Remove(orderItem);
 
-        //throw domain exception if not find order item
+        throw new DomainException($"Product {productId.Value} is not found");
     }
 
     public void GenereteTotalPriceOrder() => TotalPrice = _orderItems.Sum(o => o.Price * o.Quantity);
