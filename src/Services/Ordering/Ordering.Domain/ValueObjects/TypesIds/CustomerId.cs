@@ -2,9 +2,9 @@
 
 public record CustomerId
 {
-    public Guid Guid { get; init; }
+    public Guid Value { get; init; }
 
-    private CustomerId(Guid value) => Guid = value;
+    private CustomerId(Guid value) => Value = value;
 
     public static CustomerId Of(Guid value)
     {

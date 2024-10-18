@@ -2,6 +2,7 @@
 
 public record Address
 {
+    //Mapping this complex type
     public CustomerName CustomerName { get; init; }
     public string EmailAddress { get; init; }
     public string AddressLine { get; init; }
