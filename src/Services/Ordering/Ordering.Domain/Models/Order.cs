@@ -5,7 +5,7 @@ namespace Ordering.Domain.Models;
 public class Order : Aggregate<OrderId>
 {
     public CustomerId CustomerId { get; private set; }
-    public OrderName OrderName { get; private set; }
+    public OrderName OrderName { get; private set; } 
     public decimal TotalPrice { get; private set; }
     public Address ShippingAddress { get; private set; }
     public Address BillingAddress { get; private set; }
