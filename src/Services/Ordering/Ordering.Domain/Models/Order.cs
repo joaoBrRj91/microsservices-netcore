@@ -4,13 +4,13 @@ namespace Ordering.Domain.Models;
 
 public class Order : Aggregate<OrderId>
 {
-    public CustomerId CustomerId { get; private set; }
-    public OrderName OrderName { get; private set; } 
-    public decimal TotalPrice { get; private set; }
-    public Address ShippingAddress { get; private set; }
-    public Address BillingAddress { get; private set; }
-    public Payment Payment { get; private set; }
-    public OrderStatus OrderStatus { get; private set; }
+    public CustomerId CustomerId { get; private set; } = default!;
+    public OrderName OrderName { get; private set; } = default!;
+    public decimal TotalPrice { get; private set; } 
+    public Address ShippingAddress { get; private set; } = default!;
+    public Address BillingAddress { get; private set; } = default!;
+    public Payment Payment { get; private set; } = default!;
+    public OrderStatus OrderStatus { get; private set; } = OrderStatus.Draft;
 
     private readonly List<OrderItem> _orderItems = [];
 

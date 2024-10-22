@@ -51,28 +51,28 @@ namespace Ordering.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderName_Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    ShippingAddress_CustomerName_FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ShippingAddress_CustomerName_LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ShippingAddress_EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ShippingAddress_AddressLine = table.Column<string>(type: "nvarchar(180)", maxLength: 180, nullable: false),
-                    ShippingAddress_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ShippingAddress_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ShippingAddress_ZipCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    BillingAddress_CustomerName_FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    BillingAddress_CustomerName_LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    BillingAddress_EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Draft"),
                     BillingAddress_AddressLine = table.Column<string>(type: "nvarchar(180)", maxLength: 180, nullable: false),
                     BillingAddress_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BillingAddress_EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     BillingAddress_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     BillingAddress_ZipCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    BillingAddress_CustomerName_FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    BillingAddress_CustomerName_LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    OrderName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Payment_CVV = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     Payment_CardName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Payment_CardNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Payment_Expiration = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Payment_CVV = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Payment_PaymentMethod = table.Column<int>(type: "int", maxLength: 50, nullable: false),
-                    OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Draft"),
+                    Payment_CardNumber = table.Column<string>(type: "nvarchar(24)", maxLength: 24, nullable: false),
+                    Payment_Expiration = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Payment_PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    ShippingAddress_AddressLine = table.Column<string>(type: "nvarchar(180)", maxLength: 180, nullable: false),
+                    ShippingAddress_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ShippingAddress_EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ShippingAddress_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ShippingAddress_ZipCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    ShippingAddress_CustomerName_FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ShippingAddress_CustomerName_LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -110,19 +110,21 @@ namespace Ordering.Infrastructure.Data.Migrations
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_Email",
                 table: "Customers",
                 column: "Email",
-                unique: false);
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",

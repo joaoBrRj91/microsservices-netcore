@@ -3,12 +3,12 @@
 public record Address
 {
     //Mapping this complex type
-    public CustomerName CustomerName { get; init; }
-    public string EmailAddress { get; init; }
-    public string AddressLine { get; init; }
-    public string Country { get; init; }
-    public string State { get; init; }
-    public string ZipCode { get; init; }
+    public CustomerName CustomerName { get; init; } = default!;
+    public string EmailAddress { get; init; } = default!;
+    public string AddressLine { get; init; } = default!;
+    public string Country { get; init; }    = default!;
+    public string State { get; init; } = default!;
+    public string ZipCode { get; init; } = default!;
 
 
     protected Address() { }

@@ -3,7 +3,7 @@
 public record OrderName
 {
     private const int DEFAULT_LENGTH = 5;
-    public string Value { get; init; }
+    public string Value { get; init; } = default!;
 
     protected OrderName() { }
 

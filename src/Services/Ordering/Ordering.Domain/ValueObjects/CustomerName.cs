@@ -4,8 +4,8 @@ public record CustomerName
 {
     private const int DEFAULT_TOTAL_LENGTH = 5;
 
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
+    public string FirstName { get; init; } = default!;
+    public string LastName { get; init; } = default!; 
 
     protected CustomerName() { }
 

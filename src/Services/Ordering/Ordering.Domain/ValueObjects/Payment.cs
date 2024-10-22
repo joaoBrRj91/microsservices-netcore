@@ -2,11 +2,11 @@
 
 public record Payment
 {
-    public string CardName { get; init; }
-    public string CardNumber { get; init; }
-    public string Expiration { get; init; }
-    public string CVV { get; init; }
-    public PaymentMethod PaymentMethod { get; init; }
+    public string CardName { get; init; } = default!;
+    public string CardNumber { get; init; } = default!; 
+    public string Expiration { get; init; } = default!;
+    public string CVV { get; init; } = default!;
+    public PaymentMethod PaymentMethod { get; init; } = PaymentMethod.None;
 
     protected Payment() { }
 
