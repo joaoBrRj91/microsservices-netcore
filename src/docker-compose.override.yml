@@ -11,7 +11,7 @@ services:
         ports: 
              - "5432:5432"
         volumes:
-            - postgres_catalog:/var/lib/postgresql/data/
+             - postgres_catalog:/var/lib/postgresql/data/
 
     basketdb:
         container_name: basketdb
@@ -23,7 +23,18 @@ services:
         ports: 
              - "5433:5432"
         volumes:
-            - postgres_basket:/var/lib/postgresql/data/
+             - postgres_basket:/var/lib/postgresql/data/
+
+    orderdb:
+        container_name: orderdb
+        environment:
+        - ACCEPT_EULA=Y
+        - MSSQL_SA_PASSWORD=Strong(!)P@ssworD
+        restart: always
+        ports:
+            - "1433:1433"
+        volumes:
+            - sqlserver_order:/var/lib/sqlserver/data/
 
     distributedcache:
         container_name: distributedcache

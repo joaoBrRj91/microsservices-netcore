@@ -59,7 +59,11 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
                    paymentBuilder.Property(p => p.CVV)
                        .HasMaxLength(3);
 
-                   paymentBuilder.Property(p => p.PaymentMethod);
+                   paymentBuilder.Property(p => p.PaymentMethod)
+                   .HasDefaultValue(PaymentMethod.Credit)
+                   .HasConversion(
+                        s => s.ToString(),
+                        dbPayment => (PaymentMethod)Enum.Parse(typeof(PaymentMethod), dbPayment));
                });
 
         builder.Property(o => o.OrderStatus)

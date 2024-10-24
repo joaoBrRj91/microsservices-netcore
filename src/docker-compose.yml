@@ -7,6 +7,9 @@ services:
     basketdb:
         image: postgres
 
+    orderdb:
+        image: mcr.microsoft.com/mssql/server
+
     distributedcache:
         image: redis
 
@@ -31,5 +34,6 @@ services:
 volumes:
   postgres_catalog:
   postgres_basket:
+  sqlserver_order:
 
 
