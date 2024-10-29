@@ -11,6 +11,8 @@ public static class DependencyInjection
 
         services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
 
+        services.AddScoped<AppDbContext>();
+
         return services;
     }
 }

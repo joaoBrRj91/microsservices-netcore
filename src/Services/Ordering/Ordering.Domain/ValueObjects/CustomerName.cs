@@ -2,7 +2,7 @@
 
 public record CustomerName
 {
-    private const int DEFAULT_TOTAL_LENGTH = 5;
+    private const int DEFAULT_TOTAL_LENGTH = 200;
 
     public string FirstName { get; init; } = default!;
     public string LastName { get; init; } = default!; 
@@ -19,7 +19,7 @@ public record CustomerName
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(firstName, nameof(firstName));
         ArgumentException.ThrowIfNullOrWhiteSpace(lastName, nameof(lastName));
-        ArgumentOutOfRangeException.ThrowIfNotEqual(($"{firstName}{lastName}").Length, DEFAULT_TOTAL_LENGTH);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(($"{firstName}{lastName}").Length, DEFAULT_TOTAL_LENGTH);
 
         return new CustomerName(firstName, lastName);
     }
