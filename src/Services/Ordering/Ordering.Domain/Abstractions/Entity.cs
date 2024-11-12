@@ -1,15 +1,15 @@
 ﻿namespace Ordering.Domain.Abstractions;
 
-public abstract class Entity<TIdentity>
+public abstract class Entity<TIdentity> : IEntity
 {
     //EF Core
     protected Entity() { }
 
     protected Entity(
-        TIdentity id, 
+        TIdentity id,
         DateTime createAt,
         string createBy,
-        DateTime lastModified, 
+        DateTime lastModified,
         string lastModifiedBy)
     {
         Id = id;
@@ -20,8 +20,8 @@ public abstract class Entity<TIdentity>
     }
 
     public TIdentity Id { get; protected set; }
-    public DateTime CreateAt { get; protected set; }
-    public string CreateBy { get; protected set; } = "ADMIN";
-    public DateTime LastModified {  get; protected set; }
-    public string LastModifiedBy { get; protected set; } = "ADMIN";
+    public DateTime CreateAt { get; set; }
+    public string CreateBy { get; set; }
+    public DateTime LastModified { get; set; }
+    public string LastModifiedBy { get; set; }
 }
