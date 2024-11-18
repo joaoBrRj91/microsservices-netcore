@@ -3,7 +3,7 @@ using Ordering.Infrastructure.Data.Extensions;
 
 namespace Ordering.Infrastructure.Data.Interceptors;
 
-public sealed class AuditableEntityInterceptor: SaveChangesInterceptor
+public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
@@ -16,7 +16,7 @@ public sealed class AuditableEntityInterceptor: SaveChangesInterceptor
     {
         UpdateEntities(eventData.Context);
         return base.SavingChangesAsync(eventData, result, cancellationToken);
-    } 
+    }
 
     private void UpdateEntities(DbContext? context)
     {
