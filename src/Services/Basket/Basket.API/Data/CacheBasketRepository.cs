@@ -29,6 +29,6 @@ public class CacheBasketRepository(IBasketRepository basketRepository, IDistribu
     {
         await basketRepository.DeleteBasket(userName, cancellationToken);
 
-        await cache.RemoveAsync(userName);
+        await cache.RemoveAsync(userName, cancellationToken);
     }
 }
