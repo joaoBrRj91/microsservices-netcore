@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace Ordering.Infrastructure.Data.Interceptors;
 
-public sealed class DispatchDomainEventsInterceptor(IMediator mediator) : SaveChangesInterceptor
+public sealed class DispatchDomainEventsInterceptor(ILogger logger, IMediator mediator) : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
@@ -21,8 +22,8 @@ public sealed class DispatchDomainEventsInterceptor(IMediator mediator) : SaveCh
     {
         if (context is null)
         {
-            //logger.LogWarning("[{Soruce}] - Save Changes Interceptor Is Call With Context Null. Check This Issue",
-            //    nameof(AuditableEntityInterceptor));
+            logger.LogWarning("[{Soruce}] - Save Changes Interceptor Is Call With Context Null. Check This Issue",
+                nameof(AuditableEntityInterceptor));
 
             return;
         }
@@ -31,7 +32,7 @@ public sealed class DispatchDomainEventsInterceptor(IMediator mediator) : SaveCh
 
         var domainEvents = aggregates.SelectMany(a => a.DomainEvents);
 
-        foreach ( var domainEvent in domainEvents)
+        foreach (var domainEvent in domainEvents)
             await mediator.Publish(domainEvent);
 
         ClearEventsDispatched(aggregates);

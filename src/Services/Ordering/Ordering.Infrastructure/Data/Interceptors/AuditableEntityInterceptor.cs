@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Ordering.Infrastructure.Data.Extensions;
 
 namespace Ordering.Infrastructure.Data.Interceptors;
 
-public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
+public sealed class AuditableEntityInterceptor(ILogger logger) : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
@@ -22,8 +23,8 @@ public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
     {
         if (context is null)
         {
-            //logger.LogWarning("[{Soruce}] - Save Changes Interceptor Is Call With Context Null. Check This Issue",
-            //    nameof(AuditableEntityInterceptor));
+            logger.LogWarning("[{Soruce}] - Save Changes Interceptor Is Call With Context Null. Check This Issue",
+                nameof(AuditableEntityInterceptor));
 
             return;
         }
