@@ -1,8 +1,9 @@
-﻿using System.Reflection;
+﻿using Ordering.Application.Data;
+using System.Reflection;
 
 namespace Ordering.Infrastructure.Data;
 
-internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Product> Products => Set<Product>();
