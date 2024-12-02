@@ -1,6 +1,6 @@
 ﻿using Ordering.Application.Builders.CreateOrder;
 
-namespace Ordering.Application.Orders.Commands;
+namespace Ordering.Application.Orders.Commands.CreateOrder;
 
 public sealed class CreateOrderHandler(IAppDbContext dbContext) : ICommandHandler<CreateOrderCommand, CreateOrderResult>
 {
