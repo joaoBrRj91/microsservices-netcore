@@ -4,11 +4,11 @@ using Ordering.Domain.Models;
 using Ordering.Domain.ValueObjects;
 using Ordering.Domain.ValueObjects.TypesIds;
 
-namespace Ordering.Application.Builders.CreateOrder;
+namespace Ordering.Application.Builders;
 
-internal static class OrderDtoToCreateOrderEntityBuilder
+internal static class OrderDtoToOrderEntityBuilder
 {
-    public static Order BuildOrder(this OrderDto orderDto)
+    public static Order BuildCreateOrder(this OrderDto orderDto)
     {
         var order = Order.Create(
             id: OrderId.Of(Guid.NewGuid()),
@@ -18,9 +18,17 @@ internal static class OrderDtoToCreateOrderEntityBuilder
             billingAddress: BuildAddress(orderDto.BillingAddress),
             payment: BuildPayment(orderDto.Payment));
 
-        order.BuildOrderItems(orderDto.OrderItems);
-
         return order;
+    }
+
+    public static void BuildUpdateOrder(this OrderDto orderDto, Order order)
+    {
+        order.Update(
+            shippingAddress: BuildAddress(orderDto.ShippingAddress),
+            billingAddress: BuildAddress(orderDto.BillingAddress),
+            payment: BuildPayment(orderDto.Payment),
+            orderStatus: (OrderStatus)orderDto.Status
+            );
     }
 
     private static Address BuildAddress(AddressDto addressDto)
@@ -36,16 +44,14 @@ internal static class OrderDtoToCreateOrderEntityBuilder
 
     private static Payment BuildPayment(PaymentDto paymentDto)
     {
-        Enum.TryParse(paymentDto.PaymentMethod, true, out PaymentMethod paymentMethod);
+        if (!Enum.IsDefined(typeof(PaymentMethod), paymentDto.PaymentMethod))
+            throw new ArgumentException($"Payment Method {paymentDto.PaymentMethod} " +
+                $"is not valid in PaymentMethod Type : {string.Join(';', Enum.GetNames<PaymentMethod>())}");
 
-        return Payment.Of(paymentDto.CardName, paymentDto.CardNumber, paymentDto.Expiration, paymentDto.Cvv, paymentMethod);
-    }
-
-    private static void BuildOrderItems(this Order order, IEnumerable<OrderItemDto> orderItemsDto)
-    {
-        foreach (var orderItemDto in orderItemsDto)
-        {
-            order.AddOrderItem(ProductId.Of(orderItemDto.ProductId), orderItemDto.Quantity, orderItemDto.Price);
-        }
+        return Payment.Of(paymentDto.CardName,
+            paymentDto.CardNumber,
+            paymentDto.Expiration,
+            paymentDto.Cvv,
+            (PaymentMethod)paymentDto.PaymentMethod);
     }
 }

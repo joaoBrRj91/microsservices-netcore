@@ -9,8 +9,9 @@ public class OrderItem : Entity<OrderItemId>
         Id = OrderItemId.Of(Guid.NewGuid());
         OrderId = orderId;
         ProductId = productId;
-        Price = price;
-        Quantity = quantity;
+
+        AddPriceOrderItem(price);
+        AddQuantityOrderItem(quantity);
     }
 
     public OrderId OrderId { get; private set; }
@@ -18,4 +19,15 @@ public class OrderItem : Entity<OrderItemId>
     public decimal Price { get; private set; }
     public int Quantity { get; private set; }
 
+    public void AddPriceOrderItem(decimal price)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+        Price = price;
+    }
+
+    public void AddQuantityOrderItem(int quantity)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
+        Quantity = quantity;
+    }
 }

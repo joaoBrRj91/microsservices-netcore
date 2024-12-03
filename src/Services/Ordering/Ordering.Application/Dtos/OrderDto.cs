@@ -7,6 +7,6 @@ public record OrderDto(
     AddressDto ShippingAddress, 
     AddressDto BillingAddress,
     PaymentDto Payment, 
-    string Status, 
+    int Status, 
     IEnumerable<OrderItemDto> OrderItems);
 
