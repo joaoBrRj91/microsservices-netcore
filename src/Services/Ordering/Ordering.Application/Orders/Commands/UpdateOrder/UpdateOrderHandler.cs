@@ -15,6 +15,8 @@ public class UpdateOrderHandler(IAppDbContext dbContext)
 
         command.Order.BuildUpdateOrder(order);
 
+        CheckUpdatedOrderItems(order, command.Order.OrderItems);
+
         dbContext.Orders.Update(order);
         await dbContext.SaveChangesAsync(cancellationToken);
 
