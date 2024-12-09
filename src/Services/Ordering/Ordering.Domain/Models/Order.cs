@@ -60,9 +60,13 @@ public class Order : Aggregate<OrderId>
 
     public void UpdateOrderItem(ProductId productId, int quantity, decimal price)
     {
-        var currentOrderItem = _orderItems
-            .FirstOrDefault(o => o.ProductId.Value == productId.Value)
-            ?? throw new DomainException($"Product {productId.Value} is not found in order item of the order {Id.Value}");
+        var currentOrderItem = _orderItems.FirstOrDefault(o => o.ProductId.Value == productId.Value);
+            
+        if(currentOrderItem is null)
+        {
+            AddOrderItem(productId, quantity, price);
+            return;
+        }
 
         if (currentOrderItem.Quantity != quantity)
             currentOrderItem.AddQuantityOrderItem(quantity);
