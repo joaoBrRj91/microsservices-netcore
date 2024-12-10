@@ -32,10 +32,10 @@ public static class DependencyAddServices
         {
             //Tell Mediator when the commands and handlers is registrated
             config.RegisterServicesFromAssembly(registrationFromAssembly);
-            //Execute before find the handler who will receive the command
 
             if (isEnabledPipelineBehavior)
             {
+                //Execute before find the handler who will receive the command
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
                 config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             }
