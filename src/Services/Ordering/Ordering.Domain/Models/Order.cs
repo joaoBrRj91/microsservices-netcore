@@ -49,6 +49,11 @@ public class Order : Aggregate<OrderId>
         AddDomainEvent(new OrderUpdateEvent(this));
     }
 
+    public void Delete()
+    {
+        AddDomainEvent(new OrderDeleteEvent(this));
+    }
+
     public void AddOrderItem(ProductId productId, int quantity, decimal price)
     {
         var orderItem = new OrderItem(Id, productId, price, quantity);
