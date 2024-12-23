@@ -21,6 +21,13 @@ internal static class OrderToOrderDtoEntityBuilder
             );
     }
 
+    public static IEnumerable<OrderDto> BuildOrdersDto(this List<Order> orders)
+    {
+        var ordersDto = new List<OrderDto>(orders.Count);
+        ordersDto.AddRange(orders.Select(order => BuildOrderDto(order)));
+        return ordersDto;
+    }
+
     private static AddressDto BuildAddressDto(Address address)
     {
         return new AddressDto(
@@ -50,15 +57,19 @@ internal static class OrderToOrderDtoEntityBuilder
     }
 
 
+    #region Order Item
+    private static OrderItemDto BuildOrderItemDto(this OrderItem orderItem) => new(
+            orderItem.OrderId.Value,
+            orderItem.ProductId.Value,
+            orderItem.Quantity,
+            orderItem.Price);
+
     private static IEnumerable<OrderItemDto> BuildOrderItemsDto(IEnumerable<OrderItem> orderItems)
     {
-        foreach (var orderItem in orderItems)
-        {
-            yield return new OrderItemDto(
-                orderItem.OrderId.Value,
-                orderItem.ProductId.Value,
-                orderItem.Quantity,
-                orderItem.Price);
-        }
+        var orderItemsDto = new List<OrderItemDto>(orderItems.Count());
+        orderItemsDto.AddRange(orderItems.Select(orderItem => BuildOrderItemDto(orderItem)));
+        return orderItemsDto;
     }
+    #endregion
+
 }

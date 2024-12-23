@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Ordering.Application.Dtos;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Orders.Queries
 {
@@ -9,25 +7,14 @@ namespace Ordering.Application.Orders.Queries
     {
         public async Task<GetOrdersByNameResult> Handle(GetOrdersByNameQuery request, CancellationToken cancellationToken)
         {
-            var orders =  appDbContext
+            var orders =  await appDbContext
                 .Orders
+                .AsNoTracking()
                 .Where(o => o.OrderName.Value == request.Name)
                 .OrderBy(o => o.OrderName)
-                .AsAsyncEnumerable();
+                .ToListAsync();
 
-            return await GetOrdersByNameDto(orders);
-        }
-
-        private async Task<GetOrdersByNameResult> GetOrdersByNameDto(IAsyncEnumerable<Order> orders)
-        {
-            var ordersDto = new List<OrderDto>();
-
-            await foreach (var order in orders) 
-            {
-                ordersDto.Add(order.BuildOrderDto());
-            }
-
-            return new GetOrdersByNameResult(ordersDto);
+            return new GetOrdersByNameResult(orders.BuildOrdersDto());
         }
     }
 }
