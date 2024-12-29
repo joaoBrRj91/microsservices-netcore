@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.Core.Configurations;
-using Carter;
+using Ordering.API.Endpoints;
 
 namespace Ordering.API;
 
@@ -7,14 +7,14 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
-        //services.AddCarter(
-        //                 typeof(Program).Assembly,
-        //                 typeof(CreateOrderEndpoint),
-        //                 typeof(DeleteOrderEndpoint),
-        //                 typeof(UpdateOrderEndpoint),
-        //                 typeof(GetOrdersEndpoint),
-        //                 typeof(GetOrdersByNameEndpoint),
-        //                 typeof(GetOrdersByCustomerEndpoint));
+        services.AddCarterService(
+                         typeof(Program).Assembly,
+                         typeof(CreateOrderEndpoint),
+                         typeof(DeleteOrderEndpoint),
+                         typeof(UpdateOrderEndpoint),
+                         typeof(GetOrdersEndpoint),
+                         typeof(GetOrdersByNameEndpoint),
+                         typeof(GetOrdersByCustomerEndpoint));
         return services;
     }
 
