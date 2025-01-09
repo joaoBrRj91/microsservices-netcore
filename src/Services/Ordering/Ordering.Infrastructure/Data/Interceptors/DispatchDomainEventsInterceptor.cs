@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Ordering.Infrastructure.Data.Interceptors;
 
-public sealed class DispatchDomainEventsInterceptor(ILogger logger, IMediator mediator) : SaveChangesInterceptor
+public sealed class DispatchDomainEventsInterceptor(ILogger<DispatchDomainEventsInterceptor> logger, IMediator mediator) : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {

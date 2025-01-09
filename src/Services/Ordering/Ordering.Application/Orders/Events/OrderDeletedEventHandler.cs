@@ -1,6 +1,6 @@
 ﻿namespace Ordering.Application.Orders.Events;
 
-public sealed class OrderDeletedEventHandler(ILogger logger)
+public sealed class OrderDeletedEventHandler(ILogger<OrderDeletedEventHandler> logger)
     : INotificationHandler<OrderDeleteEvent>
 {
     public Task Handle(OrderDeleteEvent notification, CancellationToken cancellationToken)

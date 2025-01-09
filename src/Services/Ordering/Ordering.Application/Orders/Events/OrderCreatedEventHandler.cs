@@ -1,6 +1,6 @@
 ﻿namespace Ordering.Application.Orders.Events;
 
-public sealed class OrderCreatedEventHandler(ILogger logger)
+public sealed class OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
     : INotificationHandler<OrderCreateEvent>
 {
     public Task Handle(OrderCreateEvent notification, CancellationToken cancellationToken)
