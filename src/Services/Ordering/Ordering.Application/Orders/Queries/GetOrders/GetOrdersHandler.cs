@@ -17,7 +17,7 @@ internal class GetOrdersHandler(IAppDbContext appDbContext)
         var orders = await appDbContext
                 .Orders
                 .AsNoTracking()
-                .OrderBy(o => o.OrderName)
+                .OrderBy(o => o.OrderName.Value)
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);

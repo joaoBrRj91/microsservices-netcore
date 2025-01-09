@@ -11,7 +11,7 @@ internal class GetOrdersByNameHandler(IAppDbContext appDbContext)
             .Orders
             .AsNoTracking()
             .Where(o => o.OrderName.Value == request.Name)
-            .OrderBy(o => o.OrderName)
+            .OrderBy(o => o.OrderName.Value)
             .ToListAsync(cancellationToken);
 
         return new GetOrdersByNameResult(orders.BuildOrdersDto());
