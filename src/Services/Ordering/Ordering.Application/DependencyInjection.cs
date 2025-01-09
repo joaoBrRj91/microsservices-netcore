@@ -8,7 +8,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddMediatorWithFluentValidatorServices(Assembly.GetExecutingAssembly());
+        services.AddMediatorWithFluentValidatorServices(Assembly.GetExecutingAssembly(), false);
         return services;
     }
 }
