@@ -1,4 +1,5 @@
-﻿using Ordering.Application.Orders.Commands.DeleteOrder;
+﻿using Microsoft.AspNetCore.Mvc;
+using Ordering.Application.Orders.Commands.DeleteOrder;
 
 namespace Ordering.API.Endpoints;
 
@@ -10,7 +11,7 @@ public class DeleteOrderEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/orders", async (DeleteOrderRequest request, ISender sender) =>
+        app.MapDelete("/orders", async ([FromBody] DeleteOrderRequest request, ISender sender) =>
         {
             var command = request.Adapt<DeleteOrderCommand>();
 

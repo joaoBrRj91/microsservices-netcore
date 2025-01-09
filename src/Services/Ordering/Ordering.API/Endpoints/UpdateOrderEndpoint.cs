@@ -1,4 +1,5 @@
-﻿using Ordering.Application.Orders.Commands.UpdateOrder;
+﻿using Microsoft.AspNetCore.Mvc;
+using Ordering.Application.Orders.Commands.UpdateOrder;
 
 namespace Ordering.API.Endpoints;
 
@@ -10,7 +11,7 @@ public class UpdateOrderEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/orders", async (UpdateOrderRequest request, ISender sender) =>
+        app.MapPut("/orders", async ([FromBody] UpdateOrderRequest request, ISender sender) =>
         {
             var command = request.Adapt<UpdateOrderCommand>();
 
