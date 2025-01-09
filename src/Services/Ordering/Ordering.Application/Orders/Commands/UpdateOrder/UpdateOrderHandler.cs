@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using Ordering.Application.Dtos;
 using Ordering.Application.Exceptions;
 using Ordering.Domain.Models;
@@ -10,7 +11,11 @@ public class UpdateOrderHandler(IAppDbContext dbContext)
 {
     public async Task<UpdateOrderResult> Handle(UpdateOrderCommand command, CancellationToken cancellationToken)
     {
-        var order = await dbContext.Orders.FindAsync([OrderId.Of(command.Order.Id)], cancellationToken) 
+        var order = await dbContext
+            .Orders
+            .Where(o => o.Id == OrderId.Of(command.Order.Id))
+            .Include(oi => oi.OrderItems)
+            .FirstOrDefaultAsync(cancellationToken)
             ?? throw new OrderNotFoundException(command.Order.Id);
 
         command.Order.BuildUpdateOrder(order);
