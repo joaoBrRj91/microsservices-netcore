@@ -13,8 +13,17 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
         IConfiguration configuration, IWebHostEnvironment environment)
     {
-        var connectionString = configuration.GetConnectionString("Database");
+        var connectionString = configuration.GetConnectionString("Database")!;
 
+        services.AddDatabaseServices(connectionString, environment);
+        services.AddHealthCheck(connectionString);
+
+        return services;
+    }
+
+    private static void AddDatabaseServices(this IServiceCollection services,
+        string connectionString, IWebHostEnvironment environment)
+    {
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
@@ -29,6 +38,11 @@ public static class DependencyInjection
 
         services.AddScoped<IAppDbContext, AppDbContext>();
 
-        return services;
+    }
+
+    private static void AddHealthCheck(this IServiceCollection services,string connectionString)
+    {
+        services.AddHealthChecks()
+              .AddSqlServer(connectionString);
     }
 }
