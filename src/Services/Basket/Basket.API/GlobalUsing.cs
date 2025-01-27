@@ -11,3 +11,7 @@ global using Basket.API.Baskets.DeleteBasket;
 global using Basket.API.Baskets.GetBasket;
 global using Basket.API.Baskets.StoreBasket;
 global using BuildingBlocks.Core.Configurations;
+global using Basket.API.Dtos;
+global using BuildingBlocks.Messaging.Events;
+global using MassTransit;
+
