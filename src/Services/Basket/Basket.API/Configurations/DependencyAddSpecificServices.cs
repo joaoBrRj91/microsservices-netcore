@@ -1,4 +1,5 @@
-﻿using Discount.Grpc;
+﻿using BuildingBlocks.Messaging.MassTransit;
+using Discount.Grpc;
 
 namespace Basket.API.Configurations
 {
@@ -6,16 +7,20 @@ namespace Basket.API.Configurations
     {
         public static void AddInfraServices(this IServiceCollection services, IConfiguration configuration)
         {
+            // API
             services.AddCarterService(
                          typeof(Program).Assembly,
                          typeof(GetBasketEndpoint),
                          typeof(StoreBasketEndpoint),
                          typeof(DeleteBasketEndpoint));
 
+            // Mediator - CQRS
             services.AddMediatorWithFluentValidatorServices(typeof(Program).Assembly);
 
+            // Global Excpetion
             services.AddGlobalExceptionHandler();
 
+            // Marten Db - Transactional document db
             services.AddMarten(options =>
             {
                 options.Connection(configuration.GetConnectionString("DefaultConnection")!);
@@ -24,16 +29,21 @@ namespace Basket.API.Configurations
             }).UseLightweightSessions();
 
 
+            // Health Ckecks
             services.AddHealthChecks()
                 .AddNpgSql(configuration.GetConnectionString("DefaultConnection")!)
                 .AddRedis(configuration.GetConnectionString("Redis")!);
 
+
+            // Redis - Distrubuted Cache
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = configuration.GetConnectionString("Redis");
                 //options.InstanceName = "Basket";
             });
 
+
+            // Grpc - External comunication api
             services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
             {
                 options.Address = new Uri(configuration["GrpcSettings:DiscountUrl"]!);
@@ -46,8 +56,9 @@ namespace Basket.API.Configurations
                         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                     };
                 });
-            
 
+            // Queue -  Async communication
+            services.AddMessageBroker(configuration);
         }
 
         public static void AddBusinessServices(this IServiceCollection services)
