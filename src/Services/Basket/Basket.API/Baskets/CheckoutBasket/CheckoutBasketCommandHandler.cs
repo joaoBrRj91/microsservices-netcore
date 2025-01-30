@@ -28,6 +28,8 @@ public class CheckoutBasketCommandHandler
             return new CheckoutBasketResult(false);
         }
 
+
+        // TODO : This approuch have a dual write problem (Inconsistent data) - Solve it outbox pattern
         var eventMessage = command.BasketCheckoutDto.Adapt<BasketCheckoutEvent>();
         eventMessage.TotalPrice = basket.TotalPrice;
 
