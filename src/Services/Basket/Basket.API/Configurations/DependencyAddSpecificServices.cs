@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Messaging.MassTransit;
+﻿using Basket.API.Baskets.CheckoutBasket;
+using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 
 namespace Basket.API.Configurations
@@ -12,10 +13,11 @@ namespace Basket.API.Configurations
                          typeof(Program).Assembly,
                          typeof(GetBasketEndpoint),
                          typeof(StoreBasketEndpoint),
-                         typeof(DeleteBasketEndpoint));
+                         typeof(DeleteBasketEndpoint),
+                         typeof(CheckoutBasketEndpoints));
 
             // Mediator - CQRS
-            services.AddMediatorWithFluentValidatorServices(typeof(Program).Assembly);
+            services.AddMediatorWithFluentValidatorServices(typeof(Program).Assembly, isEnabledPipelineBehavior: true);
 
             // Global Excpetion
             services.AddGlobalExceptionHandler();
